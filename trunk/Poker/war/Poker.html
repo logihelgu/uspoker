@@ -26,6 +26,11 @@
     <!-- be added before this line.                -->
     <!--                                           -->
     <script type="text/javascript" language="javascript" src="poker/poker.nocache.js"></script>
+    
+    <style>
+    	.gray{ font-weight: normal; color: gray; }
+    </style>
+    
   </head>
 
   <!--                                           -->
@@ -42,13 +47,13 @@
 
     <table align="center">
       <tr>
-        <td colspan="2" style="font-weight:bold;">Standings:<span style="font-weight: normal; color: gray;">(tab delimitered, 11 playaz)</span></td>        
+        <td colspan="2" style="font-weight:bold;">Results <span class="gray">(names & score have to be tab delimited)</span></td>        
       </tr>
       <tr>
-      	<td colspan="2"><span style="font-weight: normal; color: gray;">(just copy the last line from the Google docs)</span></td>
+        <td id="nameFieldContainer">Player names</td>
       </tr>
       <tr>
-        <td id="nameFieldContainer"></td>
+        <td id="scoreFieldContainer">Player scores</td>
         <td id="sendButtonContainer"></td>
       </tr>
     </table>

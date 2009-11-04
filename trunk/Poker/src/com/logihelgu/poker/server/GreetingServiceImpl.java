@@ -1,7 +1,7 @@
 package com.logihelgu.poker.server;
 
-import com.logihelgu.poker.client.GreetingService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.logihelgu.poker.client.GreetingService;
 
 /**
  * The server side implementation of the RPC service.
@@ -9,9 +9,17 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings( "serial" )
 public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
 
-	public String greetServer( String input ) {
-		String serverInfo = getServletContext().getServerInfo();
-		String userAgent = getThreadLocalRequest().getHeader( "User-Agent" );
-		return "Hello, " + input + "!<br><br>I am running " + serverInfo + ".<br><br>It looks like you are using:<br>" + userAgent;
+	public String greetServer( String names, String scores ) {
+
+		//		TODO Change methods parameters to ArrayList<Player>
+		//		ArrayList<Player> playaz = PokerDebtDivider.results( names, scores );
+
+		int sumcheck = PokerDebtDivider.sum( names, scores );
+
+		if( sumcheck != 0 ) {
+			return "The score dosn't sum up to zero, the difference is " + sumcheck;
+		}
+
+		return PokerDebtDivider.byOrder( names, scores );
 	}
 }
