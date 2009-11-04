@@ -26,7 +26,9 @@ public class Poker implements EntryPoint {
 	public void onModuleLoad() {
 		final Button sendButton = new Button( "Send" );
 		final TextBox nameField = new TextBox();
-		nameField.setText( "" );
+		final TextBox scoreField = new TextBox();
+		nameField.setText( "Bjarni	Atli	Hugi	Gunnar	Logi	Hái	Biggi G	Kristófer	Barði	Dagný	Biggi H" );
+		scoreField.setText( "-60	-340	-350	-1750	410	320	-290	-360	2100	80	240" );
 
 		// We can add style names to widgets
 		sendButton.addStyleName( "sendButton" );
@@ -34,6 +36,7 @@ public class Poker implements EntryPoint {
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
 		RootPanel.get( "nameFieldContainer" ).add( nameField );
+		RootPanel.get( "scoreFieldContainer" ).add( scoreField );
 		RootPanel.get( "sendButtonContainer" ).add( sendButton );
 
 		// Focus the cursor on the name field when the app loads
@@ -51,14 +54,9 @@ public class Poker implements EntryPoint {
 		final HTML serverResponseLabel = new HTML();
 		VerticalPanel dialogVPanel = new VerticalPanel();
 		dialogVPanel.addStyleName( "dialogVPanel" );
-		dialogVPanel.add( new HTML( "<b>Standings:</b>" ) );
-		dialogVPanel.add( textToServerLabel );
+		//		dialogVPanel.add( new HTML( "<b>Standings:</b>" ) );
+		//		dialogVPanel.add( textToServerLabel );
 		dialogVPanel.add( new HTML( "<br><b>Results:</b>" ) );
-
-		String test = PokerDebtDivider.byOrder( textToServerLabel.getText() );
-		serverResponseLabel.setText( test );
-		serverResponseLabel.setHTML( test );
-		serverResponseLabel.setTitle( test );
 
 		dialogVPanel.add( serverResponseLabel );
 		dialogVPanel.setHorizontalAlignment( VerticalPanel.ALIGN_RIGHT );
@@ -97,10 +95,11 @@ public class Poker implements EntryPoint {
 			 */
 			private void sendNameToServer() {
 				sendButton.setEnabled( false );
-				String textToServer = nameField.getText();
-				textToServerLabel.setText( textToServer );
+				String playerNamesTextToServer = nameField.getText();
+				String scoreTextToServer = scoreField.getText();
+				textToServerLabel.setText( playerNamesTextToServer );
 				serverResponseLabel.setText( "" );
-				greetingService.greetServer( textToServer, new AsyncCallback<String>() {
+				greetingService.greetServer( playerNamesTextToServer, scoreTextToServer, new AsyncCallback<String>() {
 					public void onFailure( Throwable caught ) {
 						// Show the RPC error message to the user
 						dialogBox.setText( "Remote Procedure Call - Failure" );
@@ -111,13 +110,10 @@ public class Poker implements EntryPoint {
 					}
 
 					public void onSuccess( String result ) {
-						dialogBox.setText( "Remote Procedure Call" );
+						dialogBox.setText( "Loosers pay winners!" );
 						serverResponseLabel.removeStyleName( "serverResponseLabelError" );
 
-						//						serverResponseLabel.setHTML( result );
-
-						String test = PokerDebtDivider.byOrder( textToServerLabel.getText() );
-						serverResponseLabel.setHTML( test );
+						serverResponseLabel.setHTML( result );
 
 						dialogBox.center();
 						closeButton.setFocus( true );

@@ -7,5 +7,5 @@ import com.google.gwt.user.client.rpc.*;
  */
 @RemoteServiceRelativePath( "greet" )
 public interface GreetingService extends RemoteService {
-	String greetServer( String name );
+	String greetServer( String names, String scores );
 }
